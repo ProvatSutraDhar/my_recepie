@@ -21,6 +21,7 @@
 </div>
 <div class="recipe_action">
   <%= link_to "Edit this recipe", edit_recipe_path(@recipe), class: "btn btn-xs btn-warning" %>
+  <%= link_to "All recipes", recipes_path, class: "btn btn-xs btn-primary" %>
   <%= link_to "Delete this item", recipe_path(@recipe), method: :delete,
                                   data: {confirm: "Are you sure to delete this item?"},
                                   class: "btn btn-xs btn-danger" %>
