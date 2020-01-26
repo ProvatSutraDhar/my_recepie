@@ -1,0 +1,19 @@
+
+<%= render'shared/page_title', title: "Showing all Users/Chefs" %>
+<% @chefs.each do |chef|%>
+<div class="row">
+  <div class="col-md-2">
+    <section class = "center">
+
+    </section>
+    <%= gravater_for(chef, size: 120) %>
+    </div>
+    <div class="col-md-8 well">
+      <h4><%= link_to chef.chefname, chef_path(chef)%>
+      <p><%=chef.email%></p></h4>
+
+    </div>
+
+</div>
+
+<%end%>

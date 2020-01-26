@@ -1,7 +1,12 @@
-$navbar-default-bg: SlateGrey;
+$navbar-default-bg: #B2C875;
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
+.navbar-default{
+  font-size: auto;
+  font: #fff;
+}
 
 .center {
   text-align: center;
@@ -84,5 +89,5 @@ footer ul li{
 }
 
 .recipe_action a{
-color: #fff; 
+color: #fff;
 }

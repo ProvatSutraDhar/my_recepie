@@ -1,0 +1,19 @@
+<%= render'shared/page_title', title: "User" %>
+
+<div class="well col-md-8 col-md-offset-2">
+  <h4 class = "center description">
+<strong> Chef Info:</strong> </h4>
+<hr>
+<div class="center">
+  <%= link_to gravater_for(@chef), chef_path %>
+  <h4> <em> Chef Name: <%= @chef.chefname %> </em></h4>
+  <h4> <em> Email : <%= @chef.email %> </em></h4>
+</div>
+<%if logged_in? %>
+<div class="pull-right">
+  <%=link_to "Edit Chef", edit_chef_path(@chef), class: "btn btn-xs btn-warning"%>
+  <%= link_to "Chef Home", chefs_path, class:"btn btn-xs btn-primary" %>
+  <%end%>
+</div>
+
+</div>

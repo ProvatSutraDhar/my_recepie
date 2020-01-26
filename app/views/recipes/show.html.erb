@@ -19,6 +19,7 @@
  <div class="pull-right"> Created: <%= time_ago_in_words(@recipe.created_at)%> ago </div>
 
 </div>
+<%if logged_in? %>
 <div class="recipe_action">
   <%= link_to "Edit this recipe", edit_recipe_path(@recipe), class: "btn btn-xs btn-warning" %>
   <%= link_to "All recipes", recipes_path, class: "btn btn-xs btn-primary" %>
@@ -26,4 +27,8 @@
                                   data: {confirm: "Are you sure to delete this item?"},
                                   class: "btn btn-xs btn-danger" %>
 </div>
+<%else%>
+<%= link_to "All recipes", recipes_path, class: "btn btn-xs btn-primary" %>
+<%end%>
+
 </div>

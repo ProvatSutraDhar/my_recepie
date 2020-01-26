@@ -5,4 +5,7 @@ resources :recipes
 
 get '/signup', to: 'chefs#new'
 resources :chefs, except: [:new]
+get '/login', to: 'session#new'
+post '/login', to: 'session#create'
+delete 'logout', to: 'session#destroy'
 end
