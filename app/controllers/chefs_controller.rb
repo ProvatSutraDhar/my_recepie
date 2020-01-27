@@ -1,9 +1,8 @@
 class ChefsController < ApplicationController
 
-  before_action :sets_chefs, only:[:show, :edit, :update]
-  before_action :require_user, except:[:index, :show]
+  before_action :sets_chefs, only:[:show, :edit, :update, :destroy]
   before_action :require_same_user, only:[:edit, :update, :destroy]
-
+  before_action :require_admin, only:[:destroy]
     def index
       @chefs =Chef.all
     end
@@ -32,11 +31,19 @@ class ChefsController < ApplicationController
     def update
 
       if @chef.update(chef_params)
-        flash[:success] = "Chef has been updated!"
         redirect_to chefs_path
 
       end
     end
+
+    def destroy()
+      if !@chef.admin?
+      @chef.destroy
+      flash[:success] = "Chef has been deleted!"
+      redirect_to chef_path
+    end
+    end
+
 
     private
     def chef_params
@@ -48,9 +55,17 @@ class ChefsController < ApplicationController
     end
 
     def require_same_user
-      if current_chef != @chef
+      if current_chef != @chef && !current_chef.admin?
         flash[:danger] = "you can only edit or delete your won account"
         redirect_to chefs_path
       end
     end
+
+    def require_admin
+      if logged_in? && !current_chef.admin?
+        flash[:danger] = "you can only edit or delete your won account"
+        redirect_to root_path
+      end
+    end
+
 end

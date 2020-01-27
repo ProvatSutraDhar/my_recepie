@@ -12,8 +12,18 @@
       <h4><%= link_to chef.chefname, chef_path(chef)%>
       <p><%=chef.email%></p></h4>
 
+      <%if logged_in? && (current_chef == chef || current_chef.admin?) %>
+      <div class="recipe_action">
+        <%= link_to "Edit this recipe", edit_chef_path(chef), class: "btn btn-xs btn-warning" %>
+        <%if logged_in? && current_chef.admin? && !chef.admin?%>
+        <%= link_to "Delete this item", chef_path(chef), method: :delete,
+                                        data: {confirm: "Are you sure to delete this item?"},
+                                        class: "btn btn-xs btn-danger" %>
+        <%end%>
     </div>
+      <%end%>
 
-</div>
+    </div>
+  </div>
 
 <%end%>
