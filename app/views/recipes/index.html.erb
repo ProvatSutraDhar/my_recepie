@@ -4,14 +4,27 @@
   <div class="col-md-2">
 
       <section class= "center">
-        <%= gravater_for(recipe.chef, size: 120) %> 
+        <%= gravater_for(recipe.chef, size: 120) %>
       </section>
   </div>
   <div class="col-md-8 well">
-    <h4><%=link_to recipe.name, recipe_path(recipe)%>
-    <p><%= truncate(recipe.description, length: 150)%> </p> </h4>
-    <small><%= time_ago_in_words(recipe.created_at)%> </small>
+        <h4><%=link_to recipe.name, recipe_path(recipe)%>
+        <p><%= truncate(recipe.description, length: 150)%>  </h4>
+        <small><%= time_ago_in_words(recipe.created_at)%> </small></p>
+
+        <%if logged_in? && current_chef == recipe.chef %>
+      <div class="recipe_action">
+          <%= link_to "Edit this recipe", edit_recipe_path(recipe), class: "btn btn-xs btn-warning" %>
+                <%= link_to "Delete this item", recipe_path(recipe), method: :delete,
+                                          data: {confirm: "Are you sure to delete this item?"},
+                                          class: "btn btn-xs btn-danger" %>
+      </div>
+        <%end%>
+
   </div>
+
+
 </div>
+
 
 <%end%>

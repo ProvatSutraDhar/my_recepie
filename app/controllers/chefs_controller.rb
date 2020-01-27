@@ -1,5 +1,9 @@
 class ChefsController < ApplicationController
 
+  before_action :sets_chefs, only:[:show, :edit, :update]
+  before_action :require_user, except:[:index, :show]
+  before_action :require_same_user, only:[:edit, :update, :destroy]
+
     def index
       @chefs =Chef.all
     end
@@ -19,14 +23,14 @@ class ChefsController < ApplicationController
     end
 
     def show
-      @chef =Chef.find(params[:id])
+
     end
 
     def edit
-      @chef = Chef.find(params[:id])
+
     end
     def update
-      @chef = Chef.find(params[:id])
+
       if @chef.update(chef_params)
         flash[:success] = "Chef has been updated!"
         redirect_to chefs_path
@@ -37,5 +41,16 @@ class ChefsController < ApplicationController
     private
     def chef_params
       params.require(:chef).permit(:chefname, :email, :password, :password_confirmation)
+    end
+
+    def sets_chefs
+        @chef = Chef.find(params[:id])
+    end
+
+    def require_same_user
+      if current_chef != @chef
+        flash[:danger] = "you can only edit or delete your won account"
+        redirect_to chefs_path
+      end
     end
 end
