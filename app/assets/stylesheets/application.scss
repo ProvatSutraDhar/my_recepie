@@ -83,11 +83,22 @@ footer ul li{
   color: #616f7d;
 }
 
-
 .recipe_action{
   padding-top: 5px;
 }
 
 .recipe_action a{
 color: #fff;
+}
+
+.listing {
+  list-style: none;
+  padding-left: 0;
+}
+
+.chef-title {
+  color: #073B15;
+  font-weight: bold;
+  list-style: none;
+  font-size: 1.25em;
 }
