@@ -10,12 +10,15 @@
       <div class="col-md-8 well">
             <h4><%=link_to recipe.name, recipe_path(recipe)%>
             <p><%= truncate(recipe.description, length: 150)%>  </h4>
-            <small><%= time_ago_in_words(recipe.created_at)%> </small></p>
+               <%if recipe.ingredients.any?%>
+               <p>Ingredient: <%=  render recipe.ingredients %></p>
+               <%end%>
+            <small><%= time_ago_in_words(recipe.created_at)%> ago by <%= link_to recipe.chef.chefname, chef_path(recipe.chef)%></small></p>
 
                     <%if logged_in? && (current_chef == recipe.chef || current_chef.admin?) %>
-                  <div class="recipe_action">
-                      <%= link_to "Edit this recipe", edit_recipe_path(recipe), class: "btn btn-xs btn-warning" %>
-                            <%= link_to "Delete this item", recipe_path(recipe), method: :delete,
+                         <div class="recipe_action">
+                          <%= link_to "Edit this recipe", edit_recipe_path(recipe), class: "btn btn-xs btn-warning" %>
+                          <%= link_to "Delete this item", recipe_path(recipe), method: :delete,
                                                       data: {confirm: "Are you sure to delete this item?"},
                                                       class: "btn btn-xs btn-danger" %>
                   </div>

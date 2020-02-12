@@ -16,6 +16,7 @@
   <%end%>
 </div>
 </div>
+<%if @chef.recipes.count != 0%>
 <div align="center">
 <%= will_paginate @chef_recipes%>
 </div>
@@ -25,3 +26,6 @@
 <div align="center">
 <%= will_paginate @chef_recipes%>
 </div>
+<%else%>
+<h4> Not yet added any recipe </h4>
+<%end%>

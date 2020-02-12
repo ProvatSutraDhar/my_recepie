@@ -1,0 +1,31 @@
+
+<%= render'shared/page_title', title: "Ingredient" %>
+<div class="row">
+<div class="well col-md-6 col-md-offset-3">
+      <h4 class = "center description">
+      <strong> Ingredient Name:</strong> </h4>
+         <h5 align="center">  <strong> <%= @ingredient.name%></strong></h5>
+        <hr>
+
+      <%if logged_in? && (current_chef == @chef || current_chef.admin?) %>
+      <div class="pull-right">
+        <%=link_to "Edit ingredient", edit_ingredient_path(@ingredient), class: "btn btn-xs btn-warning"%>
+        <%= link_to "Ingredient Home", ingredients_path, class:"btn btn-xs btn-primary" %>
+        <%end%>
+      </div>
+</div>
+
+</div>
+<div class="center">
+  <%  will_paginate @ingredient_recipes%>
+</div>
+    <%if @ingredient.recipes.count != 0%>
+
+    <h4 align= "center"> <strong><%= @ingredient.name %>'s recipes</strong></h4>
+    <hr>
+
+    <%= render 'recipes/recipe', obj: @ingredient.recipes %>
+
+    <%else%>
+    <h4> Not yet added any recipe </h4>
+    <%end%>
