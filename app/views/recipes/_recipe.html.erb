@@ -13,7 +13,8 @@
                <%if recipe.ingredients.any?%>
                <p>Ingredient: <%=  render recipe.ingredients %></p>
                <%end%>
-            <small><%= time_ago_in_words(recipe.created_at)%> ago by <%= link_to recipe.chef.chefname, chef_path(recipe.chef)%></small></p>
+            <small><%= time_ago_in_words(recipe.created_at)%> ago by <%= link_to recipe.chef.chefname, chef_path(recipe.chef)%>
+            | <%= pluralize(recipe.comments.count, "Comments")%> </small></p>
 
                     <%if logged_in? && (current_chef == recipe.chef || current_chef.admin?) %>
                          <div class="recipe_action">

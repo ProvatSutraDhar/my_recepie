@@ -1,37 +1,61 @@
 <%= render 'shared/page_title', title: @recipe.name %>
 <div class="row">
+      <div class=" well col-md-8 col-md-offset-2">
+            <h4 class="center description"> <strong> Steps: </strong></h4>
+            <hr />
+            <%= simple_format(@recipe.description)%>
+            <hr />
 
+            <%if @recipe.ingredients.any?%>
+            <p>Ingredients: <%=render @recipe.ingredients%></p>
+            <%end%>
+            <div class="pull-right">
+              <p class= "center"
+                <em> Created by: </em>
+                </p>
+                <p class = "center">
+              <%= link_to gravater_for(@recipe.chef), chef_path(@recipe.chef) %>
 
-<div class=" well col-md-8 col-md-offset-2">
+              <small> <%= @recipe.chef.chefname.capitalize%> </small> </p>
+             <div class="pull-right"> Created: <%= time_ago_in_words(@recipe.created_at)%> ago</div>
 
-<h4 class="center description"> <strong> Steps: </strong></h4>
-<hr />
+            </div>
 
-<%= simple_format(@recipe.description)%>
-<hr />
+            <%if logged_in? && (current_chef == @recipe.chef || current_chef.admin?) %>
+            <div class="recipe_action">
+              <%= link_to "Edit this recipe", edit_recipe_path(@recipe), class: "btn btn-xs btn-warning" %>
+              <%= link_to "All recipes", recipes_path, class: "btn btn-xs btn-primary" %>
+              <%= link_to "Delete this item", recipe_path(@recipe), method: :delete,
+                                              data: {confirm: "Are you sure to delete this item?"},
+                                              class: "btn btn-xs btn-danger" %>
+            </div>
+            <%else%>
+            <%= link_to "All recipes", recipes_path, class: "btn btn-xs btn-primary" %>
+            <%end%>
 
-<div class="pull-right">
-  <p class= "center"
-    <em> Created by: </em>
-    </p>
-    <p class = "center">
-  <%= link_to gravater_for(@recipe.chef), chef_path(@recipe.chef) %>
-
-  <small> <%= @recipe.chef.chefname.capitalize%> </small> </p>
- <div class="pull-right"> Created: <%= time_ago_in_words(@recipe.created_at)%> ago</div>
-
+        </div>
 </div>
-<%if logged_in? && (current_chef == @recipe.chef || current_chef.admin?) %>
-<div class="recipe_action">
-  <%= link_to "Edit this recipe", edit_recipe_path(@recipe), class: "btn btn-xs btn-warning" %>
-  <%= link_to "All recipes", recipes_path, class: "btn btn-xs btn-primary" %>
-  <%= link_to "Delete this item", recipe_path(@recipe), method: :delete,
-                                  data: {confirm: "Are you sure to delete this item?"},
-                                  class: "btn btn-xs btn-danger" %>
+
+<%if logged_in?%>
+<div align="center">
+   <%= render 'comment'%>
 </div>
-<%else%>
-<%= link_to "All recipes", recipes_path, class: "btn btn-xs btn-primary" %>
+
 <%end%>
+<% if @recipe.comments !=0 %>
 
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <h3> Prior comments:</h3>
+    <div id="messages">
+      <%= render partial: 'comments/comments', object: @comments%>
+    </div>
+  </div>
 </div>
+<% else%>
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <h3> No comments yet</h3>
+  </div>
 </div>
+<%end%>
