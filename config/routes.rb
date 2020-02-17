@@ -13,4 +13,5 @@ delete 'logout', to: 'session#destroy'
 
 resources :ingredients, except: [:destroy]
 
+mount ActionCable.server => '/cable'
 end
