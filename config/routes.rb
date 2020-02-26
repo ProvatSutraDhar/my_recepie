@@ -1,17 +1,21 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-root 'pages#home'
-resources :recipes do
-  resources :comments, only:[:create]
-end
+    root 'pages#home'
 
-get '/signup', to: 'chefs#new'
-resources :chefs, except: [:new]
-get '/login', to: 'session#new'
-post '/login', to: 'session#create'
-delete 'logout', to: 'session#destroy'
+        resources :recipes do
+          resources :comments, only:[:create]
+        end
 
-resources :ingredients, except: [:destroy]
+        get '/signup', to: 'chefs#new'
+        resources :chefs, except: [:new]
+        get '/login', to: 'session#new'
+        post '/login', to: 'session#create'
+        delete 'logout', to: 'session#destroy'
 
-mount ActionCable.server => '/cable'
+    resources :ingredients, except: [:destroy]
+
+    mount ActionCable.server => '/cable'
+
+    get '/chat', to: 'chatrooms#show'
+    resources :messages ,only: [:create]
 end
