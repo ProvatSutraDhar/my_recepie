@@ -4,7 +4,7 @@ class ChefsController < ApplicationController
   before_action :require_same_user, only:[:edit, :update, :destroy]
   before_action :require_admin, only:[:destroy]
     def index
-      @chefs =Chef.paginate(page: params[:page], per_page: 5)
+      @chefs =Chef.search(params[:term]).paginate(page: params[:page], per_page: 5)
     end
      def new
        @chef = Chef.new

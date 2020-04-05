@@ -11,4 +11,9 @@ before_save { self.email = email.downcase }
     has_many :commets, dependent: :destroy
     has_many :messages, dependent: :destroy
 
+    scope :search, -> (term) do
+    where('LOWER(chefname) LIKE :term or LOWER(email) LIKE :term', term: "%#{term.downcase}%") if term.present?
+    end
+
+
 end
